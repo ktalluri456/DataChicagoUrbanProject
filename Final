@@ -1,0 +1,77 @@
+In [114]:
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+%matplotlib notebook
+
+In [115]:
+plt.style.use('seaborn-colorblind')
+
+In [118]:
+Chicagourb = pd.read_csv('Chicagourban.csv')
+Chicagourb.head()
+
+In [119]:
+Chicagourb.shape
+
+In [121]:
+Nationalurb = pd.read_csv('unemployment.csv')
+Nationalurb.head()
+
+In [123]:
+Unemployment_Average = Chicagourb.groupby('DATE').mean()
+Unemployment_Average.iloc[0]
+print(type(Unemployment_Average.iloc[0]))
+Jan = Unemployment_Average.iloc[0]
+Feb = Unemployment_Average.iloc[1]
+Mar = Unemployment_Average.iloc[2]
+Apr = Unemployment_Average.iloc[3]
+May = Unemployment_Average.iloc[4]
+Jun = Unemployment_Average.iloc[5]
+Jul = Unemployment_Average.iloc[6]
+Aug = Unemployment_Average.iloc[7]
+Sep = Unemployment_Average.iloc[8]
+Oct = Unemployment_Average.iloc[9]
+Nov = Unemployment_Average.iloc[10]
+Dec = Unemployment_Average.iloc[11]
+
+In [124]:
+Population = pd.DataFrame({'Unemployment_Average': [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]})
+Population
+
+In [126]:
+Unemployment_National = Nationalurb.groupby('DATE').mean()
+Jan = Unemployment_National.iloc[0]
+Feb = Unemployment_National.iloc[1]
+Mar = Unemployment_National.iloc[2]
+Apr = Unemployment_National.iloc[3]
+May = Unemployment_National.iloc[4]
+Jun = Unemployment_National.iloc[5]
+Jul = Unemployment_National.iloc[6]
+Aug = Unemployment_National.iloc[7]
+Sep = Unemployment_National.iloc[8]
+Oct = Unemployment_National.iloc[9]
+Nov = Unemployment_National.iloc[10]
+Dec = Unemployment_National.iloc[11]
+
+In [128]:
+Population['Unemployment_National'] = [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+Population
+
+In [129]:
+Population.index = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+Population
+
+In [130]:
+x = Population.index.tolist()
+y1 = Population['Unemployment_Average'].tolist()
+y2 = Population['Unemployment_National'].tolist()
+
+In [134]:
+plt.plot(x, y1, '-s', label = "Chicago unemployment")
+plt.plot(x, y2, '-*', label = "National Unemployment")
+plt.title('Unemployment in the Chicago Metropolitan Area and in the World per month.')
+plt.legend(frameon = False)
+[plt.gca().spines[loc].set_visible(False) for loc in ['top', 'right']]
+plt.show()
